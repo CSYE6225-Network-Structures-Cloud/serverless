@@ -74,4 +74,4 @@ def hello_pubsub(cloud_event):
     print(message_dict)
     print(type(message_dict))
     print(send_simple_message(recipient_email=email, verification_link=link))
-    insert_into_email_tracker(verification_token = link, email = email)
+    insert_into_email_tracker(verification_token = token_id, email = email)
