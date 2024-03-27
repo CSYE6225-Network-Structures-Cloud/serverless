@@ -12,19 +12,19 @@ mail_api_key =  "296e917ecc3a1abe25b5835d3397c03f-f68a26c9-75ff923b"
 
 
 db_host = os.getenv('DB_HOST')
-print(f"DB_HOST: {db_host}")
+
 
 db_port = os.getenv('DB_PORT')
-print(f"DB_PORT: {db_port}")
+
 
 db_name = os.getenv('DB_NAME')
-print(f"DB_NAME: {db_name}")
+
 
 db_user = os.getenv('DB_USER')
-print(f"DB_USER: {db_user}")
+
 
 db_password = os.getenv('DB_PASSWORD')
-print(f"DB_PASSWORD: {db_password}")
+
 
 
 
