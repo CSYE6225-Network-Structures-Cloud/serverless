@@ -8,7 +8,8 @@ import functions_framework
 
 domain_name = os.getenv('DOMAIN_NAME')
 port = os.getenv('WEBAPP_PORT')
-mail_api_key =  os.getenv('MAIL_API_KEY')
+mail_api_key =  os.getenv('MAIL_GUN_API_KEY')
+print(mail_api_key)
 db_host = os.getenv('DB_HOST')
 db_port = os.getenv('DB_PORT')
 db_name = os.getenv('DB_NAME')
@@ -26,19 +27,24 @@ def insert_into_email_tracker(verification_token, email):
         host=db_host,
         port=db_port
     )
+    try:
+        cur = conn.cursor()
+        sent_time = datetime.now() + timedelta(minutes=2)
+        cur.execute(
+            "INSERT INTO email_tracker (verification_token, email, expire_time) VALUES (%s, %s, %s)",
+            (verification_token, email, sent_time)
+        )
+        conn.commit()
+    finally:
+        conn.close()
+        print("Connection Closed From Cloud Function")
 
-    cur = conn.cursor()
-    sent_time = datetime.now() + timedelta(minutes=2)
-    cur.execute(
-        "INSERT INTO email_tracker (verification_token, email, expire_time) VALUES (%s, %s, %s)",
-        (verification_token, email, sent_time)
-    )
-    conn.commit()
 
 def generate_verification_link(token_uuid):
     # Generate the verification link
     # link = f"https://{domain_name}:{port}/verify-email/{token_uuid}"
-    link = f"{protocol}://{domain_name}:{port}/verify-email/{token_uuid}"
+    print(protocol)
+    link = f"{protocol}://{domain_name}/verify-email/{token_uuid}"
     return link
 
 def send_simple_message(recipient_email, verification_link):
