@@ -6,26 +6,15 @@ import psycopg2
 from datetime import datetime, timedelta
 import functions_framework
 
-domain_name = "snehilaryan32.store"
-port = 8080
-mail_api_key =  "296e917ecc3a1abe25b5835d3397c03f-f68a26c9-75ff923b"
-
-
+domain_name = os.getenv('DOMAIN_NAME')
+port = os.getenv('WEBAPP_PORT')
+mail_api_key =  os.getenv('MAIL_API_KEY')
 db_host = os.getenv('DB_HOST')
-
-
 db_port = os.getenv('DB_PORT')
-
-
 db_name = os.getenv('DB_NAME')
-
-
 db_user = os.getenv('DB_USER')
-
-
 db_password = os.getenv('DB_PASSWORD')
-
-
+protocol = os.getenv('PROTOCOL')
 
 
 def insert_into_email_tracker(verification_token, email):
@@ -48,7 +37,8 @@ def insert_into_email_tracker(verification_token, email):
 
 def generate_verification_link(token_uuid):
     # Generate the verification link
-    link = f"http://{domain_name}:{port}/verify-email/{token_uuid}"
+    # link = f"https://{domain_name}:{port}/verify-email/{token_uuid}"
+    link = f"{protocol}://{domain_name}:{port}/verify-email/{token_uuid}"
     return link
 
 def send_simple_message(recipient_email, verification_link):
