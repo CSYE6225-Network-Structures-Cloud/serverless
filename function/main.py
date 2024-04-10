@@ -16,6 +16,7 @@ db_name = os.getenv('DB_NAME')
 db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 protocol = os.getenv('PROTOCOL')
+endpoint = os.getenv('ENDPOINT')
 
 
 def insert_into_email_tracker(verification_token, email):
@@ -44,7 +45,7 @@ def generate_verification_link(token_uuid):
     # Generate the verification link
     # link = f"https://{domain_name}:{port}/verify-email/{token_uuid}"
     print(protocol)
-    link = f"{protocol}://{domain_name}/verify-email/{token_uuid}"
+    link = f"{protocol}://{domain_name}/{endpoint}/{token_uuid}"
     return link
 
 def send_simple_message(recipient_email, verification_link):
